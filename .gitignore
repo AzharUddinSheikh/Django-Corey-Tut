@@ -5,3 +5,4 @@ blog/migrations/
 users/migrations/
 users/__pycache__/
 profile_pics/
+media/
