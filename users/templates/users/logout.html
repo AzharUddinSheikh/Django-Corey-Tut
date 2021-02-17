@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<h2>You Have Been Logged Out</h2>
+<div class="content-section">
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Log In Again? <a href="{% url 'login' %}">Sign In</a>
+        </small>
+    </div>
+</div>
+{% endblock content %}
+
+<!-- form.as_p >> as_p method it convert into paragraph text to our form
+crsf token required whenever form created for security purpose or it won't work
+ form only have 3-4 field username pass cofirm pass if you want extra make it manually  -->
