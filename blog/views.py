@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Post
 
 '''
@@ -31,3 +31,17 @@ class PostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
+
+
+class PostCreateView(CreateView):
+    model = Post
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+        # inbuilt function in CreateView
+        form.instance.author = self.request.user
+        # take that instance and set to author
+        return super().form_valid(form)
+        # running form_valide method on parent class
+
+    # form_valid >> when user is login and its create a post then it ll assign author as user which is logged in
