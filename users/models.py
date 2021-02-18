@@ -12,7 +12,7 @@ class Profile(models.Model):
         return f'{self.user.username} Profile'
 
     # this func run after save it ll reduced the size of our image
-    def save(self):
+    def save(self, **kwargs):
         super().save()
 
         # first open the image
