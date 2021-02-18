@@ -25,7 +25,7 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
-
+        exclude = ['Currently']
 
 # clas Meta gives us nested namespace keep config in one palce so we need a field in form
 # the model that ll be affected is user model lets say
