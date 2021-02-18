@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Post
 
 '''
@@ -33,9 +34,11 @@ class PostDetailView(DetailView):
     model = Post
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'content']
+
+    """inbuild in django help to assign author as a login user  when creating a new post"""
 
     def form_valid(self, form):
         # inbuilt function in CreateView
@@ -43,5 +46,28 @@ class PostCreateView(CreateView):
         # take that instance and set to author
         return super().form_valid(form)
         # running form_valide method on parent class
+
+
+"""you cant use decorator on class that y we used login req mixin"""
+
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+
+        form.instance.author = self.request.user
+
+        return super().form_valid(form)
+
+    """test_func which is inbuild give a test is user which is logged in is same as author of the post when updating"""
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        else:
+            return False
 
     # form_valid >> when user is login and its create a post then it ll assign author as user which is logged in
