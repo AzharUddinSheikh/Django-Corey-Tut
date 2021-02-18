@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .form import UserRegisterForm
+from .form import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -21,7 +21,14 @@ def register(request):
 
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html')
+    u_form = UserUpdateForm
+    p_form = ProfileUpdateForm
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form,
+    }
+    return render(request, 'users/profile.html', context)
 
 # request.POST = request.POST is a data when we Request is POST and form ll created
 # replace UserCreationForm >> UserRegisterForm (bvoz its already a child class of that)

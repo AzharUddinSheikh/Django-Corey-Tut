@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import Profile
 
 
 class UserRegisterForm(UserCreationForm):
@@ -9,6 +10,21 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email']
+
+
+class UserUpdateForm(forms.ModelForm):
+    # this modelform allows us to create a form which work with specific data in databse
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']
 
 
 # clas Meta gives us nested namespace keep config in one palce so we need a field in form
