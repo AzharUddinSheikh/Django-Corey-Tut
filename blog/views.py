@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Post
 
@@ -19,6 +20,7 @@ def about(request):
 
 
 class PostListView(ListView):
+    """this is public home post"""
     # this is class based view djang0 support few of them like ListView , DetailView, delete update etc
     model = Post
     template_name = 'blog/home.html'
@@ -29,6 +31,18 @@ class PostListView(ListView):
 
     # if you forgot it then is show error like
     # <app>/<models>_<viewtype>.html
+
+
+class UserPostListView(ListView):
+    """this is user post only """
+    model = Post
+    template_name = 'blog/user_posts.html'
+    context_object_name = 'posts'
+    paginate_by = 2
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Post.objects.filter(author=user).order_by('-date_posted')
 
 
 class PostDetailView(DetailView):
