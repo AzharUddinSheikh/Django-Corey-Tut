@@ -24,6 +24,7 @@ class PostListView(ListView):
     template_name = 'blog/home.html'
     context_object_name = 'posts'  # what variable posts ll got to temp
     ordering = ['-date_posted']  # newest to oldest
+    paginate_by = 2
     # ordering = ['date_posted'] oldest to newest
 
     # if you forgot it then is show error like

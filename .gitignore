@@ -6,3 +6,4 @@ users/migrations/
 users/__pycache__/
 profile_pics/
 media/
+django_project/config.py
