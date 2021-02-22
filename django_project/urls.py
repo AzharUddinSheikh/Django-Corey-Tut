@@ -20,8 +20,6 @@ from users import views as user_views
 from django.conf import settings
 from django.conf.urls.static import static
 
-app_name = "users"
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
@@ -38,6 +36,9 @@ urlpatterns = [
 
     path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(
         template_name='users/password_reset_confirm.html'), name='password_reset_confirm'),
+
+    path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(
+        template_name='users/password_reset_complete.html'), name='password_reset_complete'),
 
 ]
 
